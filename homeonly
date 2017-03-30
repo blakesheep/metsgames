@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import urllib2
+import json
+import requests
+
+
+def print_results(response):
+  json_data = response.json
+  
+  #for i in json_data["gameentry"]:
+  #	print i["homeTeam"]["Name"]["Mets"]
+
+  print "Mets will play at Citi Field on the following days:"
+  for i in json_data["gameentry"]:
+	mets_home = i["homeTeam"]["Name"]["Mets"]
+	if  mets_home and mets_home == Mets:
+	  print("".format(i["gameentry"]["date"], mets_home))
+
+
+def main():
+	url = "https://www.mysportsfeeds.com/api/feed/sample/pull/mlb/2016-2016-regular/full_game_schedule.json?"
+
+	response = requests.get(url)
+	if  response.status_code == 200:
+	# print out our customized results
+		print_results(response)
+	else:
+		print("Received an error from server, cannot retrieve results {0}".format(response.status_code))
+
+if __name__ == "__main__":
+	main()
